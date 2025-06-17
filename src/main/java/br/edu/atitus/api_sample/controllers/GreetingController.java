@@ -12,17 +12,17 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/greeting")
+@RequestMapping("/ws/greeting")
 public class GreetingController {
-	
+
 	@PostMapping
 	public ResponseEntity<String> postGreeting
-		(@RequestBody String value) throws Exception {
+			(@RequestBody String value) throws Exception {
 		if (value.length() > 10)
 			throw new Exception("Tamanho do value deve ser no máximo 10");
 		return ResponseEntity.status(HttpStatus.CREATED).body(value);
 	}
-	
+
 
 	@GetMapping(value = {"","/","/{namePath}"})
 	public String getGreeting(
@@ -33,13 +33,13 @@ public class GreetingController {
 		String returnGreeting = String.format("%s %s!", "Hello", name);
 		return returnGreeting;
 	}
-	
+
 	@ExceptionHandler(value = Exception.class)
 	public ResponseEntity<String> handlerException(Exception ex) {
 		String message = ex.getMessage().replaceAll("\r\n", "");
 		return ResponseEntity.badRequest().body(message);
 	}
-	
-	
-	
+
+
+
 }
